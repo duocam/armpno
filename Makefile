@@ -1,8 +1,8 @@
-.PHONY: all
+.PHONY: all 
 
 host_targets = chapter1/1.9/perf_event
 
-arm_targets = chapter1/1.9/perf_event
+arm_targets = chapter1/1.9/perf_event_arm
 
 all: ${host_targets} ${arm_targets}
 
