@@ -1,21 +1,24 @@
-.PHONY: all
+.PHONY: all 
 
-host_targets = bubble_sort perf_event horner_omp image_transformation image_trans_fp opencl
+host_targets = chapter1/1.9/perf_event
 
-arm_targets = bubble_sort_arm perf_event_arm horner_omp_arm image_transformation_arm image_trans_fp_arm opencl_arm
+arm_targets = chapter1/1.9/perf_event_arm
 
 all: ${host_targets} ${arm_targets}
 
 GCC = gcc
-HOST_CFLAGS = -g -fopenmp #-O3
+HOST_CFLAGS = -g -fopenmp -O3
 HOST_LDFLAGS = -lm 
 
-ARM_GCC = aarch64-linux-gnu-gcc
-ARM_CFLAGS = -g -fopenmp -static#-O3
+ARM_GCC = armv7a-linux-androideabi28-clang
+ARM_CFLAGS = -g -fopenmp -static -O3
 ARM_LDFLAGS = -lm 
 
 %: %.c
 	${GCC} $^ ${HOST_CFLAGS} ${HOST_LDFLAGS} -o $@
+	@echo "Test" $@
+	./$@
+	@echo ""
 
 %_arm: %.c
 	${ARM_GCC} $^ ${ARM_CFLAGS} ${ARM_LDFLAGS}  -o $@

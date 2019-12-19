@@ -3,37 +3,31 @@ Sample code of &lt;&lt;ARM Programming and Optimization>>
 
 ## Configuration
 ### Toolchain
-gcc on host
+gcc on host.
 
-aarch64-linx-gnu-gcc on ARM
+armv7a-linux-androideabi28-clang for cross compilation.
 
 ## Build
-### Make host targets
 ```
-make host_targets
-```
-
-### Make ARM targets
-```
-make arm_targets
+make all
 ```
 
 ### Make specific targets
 ```
-make bubble_sort
-make bubble_sort_arm
+make chapter1/1.9/perf_event
+make chapter1/1.9/perf_event_arm
 ```
 
 ## Test
 ### Test on Host
 ```
-./bubble_sort
+./chapter1/1.9/perf_event
 ```
 
 ### Test on ARM
 ```
 adb root
 adb remount
-adb push ./bubble_sort_arm /data/local/tmp
-adb shell /data/local/tmp/bubble_sort_arm
+adb push ./chapter1/1.9/perf_event_arm /data/local/tmp
+adb shell /data/local/tmp/perf_event_arm
 ```
