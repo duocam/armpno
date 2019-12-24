@@ -10,6 +10,7 @@
 #include <linux/fb.h>
 #include <math.h>
 #include <linux/perf_event.h>
+#include <string.h>
 
 #define CYCLES 0
 #define INSTRUCTIONS 1
@@ -81,6 +82,7 @@ int cnts_open(int *fd) {
 		perror("cannot open perf_counter for cachemisses");
 		exit(0);
 	}
+	return 0;
 }
 
 void cnts_tick(int *fd) {

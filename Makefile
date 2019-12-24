@@ -15,11 +15,11 @@ c3_arm_targets : $(C3)image_transformation_arm $(C3)image_trans_fp_arm
 all: c1_host_targets c1_arm_targets c3_host_targets c3_arm_targets
 
 GCC = gcc
-HOST_CFLAGS = -g -fopenmp -O3
+HOST_CFLAGS = -g -fopenmp -O3 -Wno-implicit-function-declaration -Wno-unused-result -Wno-pointer-to-int-cast
 HOST_LDFLAGS = -lm 
 
 ARM_GCC = armv7a-linux-androideabi28-clang
-ARM_CFLAGS = -g -fopenmp -static -DARM=1 -O3
+ARM_CFLAGS = -g -fopenmp -static -DARM=1 -O3 -Wno-implicit-function-declaration -Wno-unused-result -Wno-pointer-to-int-cast
 ARM_LDFLAGS = -lm 
 
 %: %.c
