@@ -1,13 +1,18 @@
-.PHONY: all 
+.PHONY: all  clean
 
 C1 = chapter1/
 C3 = chapter3/
 
-c1_host_targets = $(C1)1.9/perf_event $(C1)1.6.1/bubble_sort $(C3)image_transformation $(C3)image_trans_fp
 
-c1_arm_targets = $(C1)1.9/perf_event_arm $(C1)1.6.1/bubble_sort_arm $(C1)1.6.2/bubble_sort_asm $(C1)1.6.3/bubble_sort $(C3)image_transformation_arm $(C3)image_trans_fp_arm
+c1_host_targets : $(C1)1.9/perf_event $(C1)1.6.1/bubble_sort $(C3)image_transformation $(C3)image_trans_fp
 
-all: ${c1_host_targets} ${c1_arm_targets}
+c1_arm_targets : $(C1)1.9/perf_event_arm $(C1)1.6.1/bubble_sort_arm $(C1)1.6.2/bubble_sort_asm $(C1)1.6.3/bubble_sort $(C3)image_transformation_arm $(C3)image_trans_fp_arm
+
+c3_host_targets : $(C3)image_transformation $(C3)image_trans_fp
+
+c3_arm_targets : $(C3)image_transformation_arm $(C3)image_trans_fp_arm
+
+all: c1_host_targets c1_arm_targets c3_host_targets c3_arm_targets
 
 GCC = gcc
 HOST_CFLAGS = -g -fopenmp -O3
@@ -41,5 +46,5 @@ opencl: opencl.c
 opencl_arm: opencl.c
 	${GCC} $^ ${ARM_CFLAGS} ${ARM_LDFLAGS} -lOpenCL -o $@
 
-clean:
-	rm -rf ${c1_host_targets} ${c1_arm_targets}
+clean: 
+	@find chapter* -executable -type f | xargs rm -rf
