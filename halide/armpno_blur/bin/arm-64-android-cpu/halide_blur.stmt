@@ -1,0 +1,105 @@
+module name=halide_blur, target=arm-64-android
+external_plus_metadata func halide_blur (input, blur_y) {
+assert(((uint64)reinterpret(((buffer_t *))input.buffer) != (uint64)0), halide_error_buffer_argument_is_null("input"))
+assert(((uint64)reinterpret(((buffer_t *))blur_y.buffer) != (uint64)0), halide_error_buffer_argument_is_null("blur_y"))
+let blur_y = ((void *))_halide_buffer_get_host(((buffer_t *))blur_y.buffer)
+let blur_y.type = (uint32)_halide_buffer_get_type(((buffer_t *))blur_y.buffer)
+let blur_y.dimensions = _halide_buffer_get_dimensions(((buffer_t *))blur_y.buffer)
+let blur_y.min.0 = _halide_buffer_get_min(((buffer_t *))blur_y.buffer, 0)
+let blur_y.extent.0 = _halide_buffer_get_extent(((buffer_t *))blur_y.buffer, 0)
+let blur_y.stride.0 = _halide_buffer_get_stride(((buffer_t *))blur_y.buffer, 0)
+let blur_y.min.1 = _halide_buffer_get_min(((buffer_t *))blur_y.buffer, 1)
+let blur_y.extent.1 = _halide_buffer_get_extent(((buffer_t *))blur_y.buffer, 1)
+let blur_y.stride.1 = _halide_buffer_get_stride(((buffer_t *))blur_y.buffer, 1)
+let input = ((void *))_halide_buffer_get_host(((buffer_t *))input.buffer)
+let input.type = (uint32)_halide_buffer_get_type(((buffer_t *))input.buffer)
+let input.dimensions = _halide_buffer_get_dimensions(((buffer_t *))input.buffer)
+let input.min.0 = _halide_buffer_get_min(((buffer_t *))input.buffer, 0)
+let input.extent.0 = _halide_buffer_get_extent(((buffer_t *))input.buffer, 0)
+let input.stride.0 = _halide_buffer_get_stride(((buffer_t *))input.buffer, 0)
+let input.min.1 = _halide_buffer_get_min(((buffer_t *))input.buffer, 1)
+let input.extent.1 = _halide_buffer_get_extent(((buffer_t *))input.buffer, 1)
+let input.stride.1 = _halide_buffer_get_stride(((buffer_t *))input.buffer, 1)
+let blur_y.extent.0.required.s = (min((((blur_y.extent.0 + -1)/8)*8), (blur_y.extent.0 + -8)) - min(blur_y.extent.0, 8))
+let blur_y.extent.1.required.s = (min((((blur_y.extent.1 + -1)/8)*8), (blur_y.extent.1 + -8)) - min(blur_y.extent.1, 8))
+if ((uint1)_halide_buffer_is_bounds_query(((buffer_t *))blur_y.buffer)) {
+ ((halide_buffer_t *))_halide_buffer_init(((halide_buffer_t *))blur_y.buffer, ((halide_dimension_t *))_halide_buffer_get_shape(((halide_buffer_t *))blur_y.buffer), ((void *))reinterpret((uint64)0), (uint64)0, ((halide_device_interface_t *))reinterpret((uint64)0), 1, 16, 2, ((halide_dimension_t *))make_struct(((min(blur_y.extent.0, 8) + blur_y.min.0) + -8), (blur_y.extent.0.required.s + 16), 1, 0, ((min(blur_y.extent.1, 8) + blur_y.min.1) + -8), (blur_y.extent.1.required.s + 16), (blur_y.extent.0.required.s + 16), 0), (uint64)0)
+}
+if ((uint1)_halide_buffer_is_bounds_query(((buffer_t *))input.buffer)) {
+ ((halide_buffer_t *))_halide_buffer_init(((halide_buffer_t *))input.buffer, ((halide_dimension_t *))_halide_buffer_get_shape(((halide_buffer_t *))input.buffer), ((void *))reinterpret((uint64)0), (uint64)0, ((halide_device_interface_t *))reinterpret((uint64)0), 1, 16, 2, ((halide_dimension_t *))make_struct(((min(blur_y.extent.0, 8) + blur_y.min.0) + -8), (max(blur_y.extent.0, 8) + 2), 1, 0, blur_y.min.1, (blur_y.extent.1 + 2), (max(blur_y.extent.0, 8) + 2), 0), (uint64)0)
+}
+if (!((uint1)_halide_buffer_is_bounds_query(((buffer_t *))blur_y.buffer) || (uint1)_halide_buffer_is_bounds_query(((buffer_t *))input.buffer))) {
+ assert((blur_y.type == (uint32)69633), halide_error_bad_type("Output buffer blur_y", blur_y.type, (uint32)69633))
+ assert((blur_y.dimensions == 2), halide_error_bad_dimensions("Output buffer blur_y", blur_y.dimensions, 2))
+ assert((input.type == (uint32)69633), halide_error_bad_type("Input buffer input", input.type, (uint32)69633))
+ assert((input.dimensions == 2), halide_error_bad_dimensions("Input buffer input", input.dimensions, 2))
+ assert(((8 <= blur_y.extent.0) && ((((min(blur_y.extent.0, 8) + blur_y.min.0) + blur_y.extent.0.required.s) + 8) <= (blur_y.extent.0 + blur_y.min.0))), halide_error_access_out_of_bounds("Output buffer blur_y", 0, ((min(blur_y.extent.0, 8) + blur_y.min.0) + -8), (((min(blur_y.extent.0, 8) + blur_y.min.0) + blur_y.extent.0.required.s) + 7), blur_y.min.0, ((blur_y.extent.0 + blur_y.min.0) + -1)))
+ assert(((8 <= blur_y.extent.1) && ((((min(blur_y.extent.1, 8) + blur_y.min.1) + blur_y.extent.1.required.s) + 8) <= (blur_y.extent.1 + blur_y.min.1))), halide_error_access_out_of_bounds("Output buffer blur_y", 1, ((min(blur_y.extent.1, 8) + blur_y.min.1) + -8), (((min(blur_y.extent.1, 8) + blur_y.min.1) + blur_y.extent.1.required.s) + 7), blur_y.min.1, ((blur_y.extent.1 + blur_y.min.1) + -1)))
+ assert(((input.min.0 <= blur_y.min.0) && (((blur_y.extent.0 + blur_y.min.0) + 2) <= (input.extent.0 + input.min.0))), halide_error_access_out_of_bounds("Input buffer input", 0, blur_y.min.0, ((blur_y.extent.0 + blur_y.min.0) + 1), input.min.0, ((input.extent.0 + input.min.0) + -1)))
+ assert((0 <= input.extent.0), halide_error_buffer_extents_negative("Input buffer input", 0, input.extent.0))
+ assert(((input.min.1 <= blur_y.min.1) && (((blur_y.extent.1 + blur_y.min.1) + 2) <= (input.extent.1 + input.min.1))), halide_error_access_out_of_bounds("Input buffer input", 1, blur_y.min.1, ((blur_y.extent.1 + blur_y.min.1) + 1), input.min.1, ((input.extent.1 + input.min.1) + -1)))
+ assert((0 <= input.extent.1), halide_error_buffer_extents_negative("Input buffer input", 1, input.extent.1))
+ assert((blur_y.stride.0 == 1), halide_error_constraint_violated("blur_y.stride.0", blur_y.stride.0, "1", 1))
+ assert((input.stride.0 == 1), halide_error_constraint_violated("input.stride.0", input.stride.0, "1", 1))
+ let blur_y.total_extent.1 = (int64(blur_y.extent.1)*int64(blur_y.extent.0))
+ let input.total_extent.1 = (int64(input.extent.1)*int64(input.extent.0))
+ assert(((uint64)abs(int64(blur_y.extent.0)) <= (uint64)2147483647), halide_error_buffer_allocation_too_large("blur_y", (uint64)abs(int64(blur_y.extent.0)), (uint64)2147483647))
+ assert(((uint64)abs((int64(blur_y.extent.1)*int64(blur_y.stride.1))) <= (uint64)2147483647), halide_error_buffer_allocation_too_large("blur_y", (uint64)abs((int64(blur_y.extent.1)*int64(blur_y.stride.1))), (uint64)2147483647))
+ assert((blur_y.total_extent.1 <= (int64)2147483647), halide_error_buffer_extents_too_large("blur_y", blur_y.total_extent.1, (int64)2147483647))
+ assert(((uint64)abs(int64(input.extent.0)) <= (uint64)2147483647), halide_error_buffer_allocation_too_large("input", (uint64)abs(int64(input.extent.0)), (uint64)2147483647))
+ assert(((uint64)abs((int64(input.extent.1)*int64(input.stride.1))) <= (uint64)2147483647), halide_error_buffer_allocation_too_large("input", (uint64)abs((int64(input.extent.1)*int64(input.stride.1))), (uint64)2147483647))
+ assert((input.total_extent.1 <= (int64)2147483647), halide_error_buffer_extents_too_large("input", input.total_extent.1, (int64)2147483647))
+ assert((blur_y != ((void *))reinterpret((uint64)0)), halide_error_host_is_null("Output buffer blur_y"))
+ assert((input != ((void *))reinterpret((uint64)0)), halide_error_host_is_null("Input buffer input"))
+ produce blur_y {
+  let t79 = (blur_y.extent.0 + blur_y.min.0)
+  let t80 = (blur_y.min.1*blur_y.stride.1)
+  let t81 = (input.min.1*input.stride.1)
+  let t73 = (0 < (blur_y.extent.0 % 8))
+  let t69 = ((blur_y.extent.1 + 7)/8)
+  let t71 = (blur_y.extent.0/8)
+  let t74 = ((t79 - t81) - input.min.0)
+  let t72 = ((blur_y.min.0 - t81) - input.min.0)
+  let t77 = (0 - t80)
+  let t78 = (((t79 - t80) - blur_y.min.0) + -8)
+  let t70 = (blur_y.extent.1 + -8)
+  parallel (blur_y.s0.y.y, 0, t69) {
+   let blur_y.s0.y.yi.base.s = min((blur_y.s0.y.y*8), t70)
+   allocate blur_x[uint16 * blur_y.extent.0 * 4]
+   let t85 = (blur_y.min.1 + blur_y.s0.y.yi.base.s)
+   for (blur_y.s0.y.yi, 0, 8) {
+    let blur_x.s0.y.min_2 = (select((0 < blur_y.s0.y.yi), (blur_y.s0.y.yi + 2), blur_y.s0.y.yi) + t85)
+    produce blur_x {
+     let t86 = select((0 < blur_y.s0.y.yi), 1, 3)
+     for (blur_x.s0.y, blur_x.s0.y.min_2, t86) {
+      let t88 = ((blur_x.s0.y % 4)*blur_y.extent.0)
+      let t87 = ((blur_x.s0.y*input.stride.1) + t72)
+      for (blur_x.s0.x.x, 0, t71) {
+       blur_x[ramp(((blur_x.s0.x.x*8) + t88), 1, 8)] = ((input[ramp((((blur_x.s0.x.x*8) + t87) + 1), 1, 8)] + (input[ramp((((blur_x.s0.x.x*8) + t87) + 2), 1, 8)] + input[ramp(((blur_x.s0.x.x*8) + t87), 1, 8)]))/x8((uint16)3))
+      }
+      if (t73) {
+       blur_x[ramp(((((blur_x.s0.y % 4) + 1)*blur_y.extent.0) + -8), 1, 8)] = ((input[ramp((((blur_x.s0.y*input.stride.1) + t74) + -7), 1, 8)] + (input[ramp((((blur_x.s0.y*input.stride.1) + t74) + -6), 1, 8)] + input[ramp((((blur_x.s0.y*input.stride.1) + t74) + -8), 1, 8)]))/x8((uint16)3))
+      }
+     }
+    }
+    consume blur_x {
+     let t93 = (blur_y.s0.y.yi + t85)
+     let t89 = (((t93 + 2) % 4)*blur_y.extent.0)
+     let t91 = (((t93 + 1) % 4)*blur_y.extent.0)
+     let t90 = ((t93 % 4)*blur_y.extent.0)
+     let t92 = ((blur_y.stride.1*t93) + t77)
+     for (blur_y.s0.x.x, 0, t71) {
+      blur_y[ramp(((blur_y.s0.x.x*8) + t92), 1, 8)] = ((blur_x[ramp(((blur_y.s0.x.x*8) + t91), 1, 8)] + (blur_x[ramp(((blur_y.s0.x.x*8) + t89), 1, 8)] + blur_x[ramp(((blur_y.s0.x.x*8) + t90), 1, 8)]))/x8((uint16)3))
+     }
+     if (t73) {
+      blur_y[ramp((((blur_y.s0.y.yi + t85)*blur_y.stride.1) + t78), 1, 8)] = ((blur_x[ramp(((((((blur_y.s0.y.yi + t85) + 1) % 4) + 1)*blur_y.extent.0) + -8), 1, 8)] + (blur_x[ramp(((((((blur_y.s0.y.yi + t85) + 2) % 4) + 1)*blur_y.extent.0) + -8), 1, 8)] + blur_x[ramp((((((blur_y.s0.y.yi + t85) % 4) + 1)*blur_y.extent.0) + -8), 1, 8)]))/x8((uint16)3))
+     }
+    }
+   }
+   free blur_x
+  }
+ }
+}
+}
+
+
