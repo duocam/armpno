@@ -1,0 +1,16 @@
+
+example_vector_addition_auto_vectorization.o:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000000000 <_Z7vec_addPfS_S_i>:
+       0: 7f 04 00 71  	cmp	w3, #1
+       4: 0b 01 00 54  	b.lt	0x24 <_Z7vec_addPfS_S_i+0x24>
+       8: e8 03 03 2a  	mov	w8, w3
+       c: 00 44 40 bc  	ldr	s0, [x0], #4
+      10: 21 44 40 bc  	ldr	s1, [x1], #4
+      14: 08 05 00 f1  	subs	x8, x8, #1
+      18: 00 28 21 1e  	fadd	s0, s0, s1
+      1c: 40 44 00 bc  	str	s0, [x2], #4
+      20: 61 ff ff 54  	b.ne	0xc <_Z7vec_addPfS_S_i+0xc>
+      24: c0 03 5f d6  	ret

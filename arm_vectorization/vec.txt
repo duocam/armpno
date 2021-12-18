@@ -1,0 +1,53 @@
+
+example_vector_addition_auto_vectorization.o:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000000000 <_Z7vec_addPfS_S_i>:
+       0: 7f 04 00 71  	cmp	w3, #1
+       4: ab 05 00 54  	b.lt	0xb8 <_Z7vec_addPfS_S_i+0xb8>
+       8: 7f 10 00 71  	cmp	w3, #4
+       c: e8 03 03 2a  	mov	w8, w3
+      10: e9 03 1f aa  	mov	x9, xzr
+      14: c3 03 00 54  	b.lo	0x8c <_Z7vec_addPfS_S_i+0x8c>
+      18: 0a f5 7e d3  	lsl	x10, x8, #2
+      1c: 0c 00 0a 8b  	add	x12, x0, x10
+      20: 4b 00 0a 8b  	add	x11, x2, x10
+      24: 9f 01 02 eb  	cmp	x12, x2
+      28: 2a 00 0a 8b  	add	x10, x1, x10
+      2c: ec 97 9f 1a  	cset	w12, hi
+      30: 7f 01 00 eb  	cmp	x11, x0
+      34: ed 97 9f 1a  	cset	w13, hi
+      38: 5f 01 02 eb  	cmp	x10, x2
+      3c: ea 97 9f 1a  	cset	w10, hi
+      40: 7f 01 01 eb  	cmp	x11, x1
+      44: 8c 01 0d 0a  	and	w12, w12, w13
+      48: eb 97 9f 1a  	cset	w11, hi
+      4c: 0c 02 00 37  	tbnz	w12, #0, 0x8c <_Z7vec_addPfS_S_i+0x8c>
+      50: 4a 01 0b 0a  	and	w10, w10, w11
+      54: ca 01 00 37  	tbnz	w10, #0, 0x8c <_Z7vec_addPfS_S_i+0x8c>
+      58: 09 75 7e 92  	and	x9, x8, #0xfffffffc
+      5c: 0a 75 7e 92  	and	x10, x8, #0xfffffffc
+      60: eb 03 02 aa  	mov	x11, x2
+      64: ec 03 01 aa  	mov	x12, x1
+      68: ed 03 00 aa  	mov	x13, x0
+      6c: a0 05 c1 3c  	ldr	q0, [x13], #16
+      70: 81 05 c1 3c  	ldr	q1, [x12], #16
+      74: 4a 11 00 f1  	subs	x10, x10, #4
+      78: 00 d4 21 4e  	fadd	v0.4s, v0.4s, v1.4s
+      7c: 60 05 81 3c  	str	q0, [x11], #16
+      80: 61 ff ff 54  	b.ne	0x6c <_Z7vec_addPfS_S_i+0x6c>
+      84: 3f 01 08 eb  	cmp	x9, x8
+      88: 80 01 00 54  	b.eq	0xb8 <_Z7vec_addPfS_S_i+0xb8>
+      8c: 2c f5 7e d3  	lsl	x12, x9, #2
+      90: 4a 00 0c 8b  	add	x10, x2, x12
+      94: 2b 00 0c 8b  	add	x11, x1, x12
+      98: 0c 00 0c 8b  	add	x12, x0, x12
+      9c: 08 01 09 cb  	sub	x8, x8, x9
+      a0: 80 45 40 bc  	ldr	s0, [x12], #4
+      a4: 61 45 40 bc  	ldr	s1, [x11], #4
+      a8: 08 05 00 f1  	subs	x8, x8, #1
+      ac: 00 28 21 1e  	fadd	s0, s0, s1
+      b0: 40 45 00 bc  	str	s0, [x10], #4
+      b4: 61 ff ff 54  	b.ne	0xa0 <_Z7vec_addPfS_S_i+0xa0>
+      b8: c0 03 5f d6  	ret
