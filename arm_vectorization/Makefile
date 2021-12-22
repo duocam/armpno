@@ -16,7 +16,7 @@ clean :
 	rm -rf ${TARGET}
 
 non_vec.o : example_vector_addition_auto_vectorization.cc
-	${CC} ${VFLAGS}  $^ -o $@
+	${CC} ${FLAGS}  $^ -o $@
 
 non_vec.txt : non_vec.o
 	${OBJDUMP} -d $^ > $@
